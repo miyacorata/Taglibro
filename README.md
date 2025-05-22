@@ -1,3 +1,3 @@
-# Cognito-SP
+# Taglibro
 
-Cognitoのマネージドログインのサンプルアプリ的なやつ
+ブログ用システム
