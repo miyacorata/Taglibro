@@ -1,12 +1,12 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "miyacorata/cognito-sp",
+    "name": "miyacorata/taglibro",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "Simple CMS with Cognito",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "aws/aws-sdk-php": "^3.340",
         "firebase/php-jwt": "^6.11",
         "laravel/framework": "^12.0",
