@@ -40,6 +40,13 @@
 </head>
 <body>
 
+<section class="hero is-primary is-small">
+    <div class="hero-body px-6">
+        <p class="title mb-2 has-text-weight-medium"><a href="{{ url('/') }}" class="has-text-black">{{ config('app.name') }}</a></p>
+        <p class="subtitle is-6">{{ config('app.description') }}</p>
+    </div>
+</section>
+
 @if($errors->count())
 
     <div class="notification is-danger is-light">
