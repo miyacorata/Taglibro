@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CognitoUser;
+use App\Models\User;
 use Firebase\JWT\JWK;
 use Firebase\JWT\JWT;
 use GuzzleHttp\Exception\GuzzleException;
@@ -61,6 +62,15 @@ class AuthController extends Controller
 
             // Laravel 認証システムにログイン
             Auth::guard('cognito')->login(new CognitoUser($userData));
+
+            // アプリ内部ユーザーデータを更新もしくは追加
+            /** @var User $appUser */
+            $appUser = User::whereSub($userData['sub'])->first() ?? new User();
+            $appUser->sub = $userData['sub'];
+            $appUser->preferred_username = $userData['preferred_username'];
+            $appUser->name = $userData['name'];
+            $appUser->email = $userData['email'];
+            $appUser->save();
 
             return redirect('/dashboard');
         } catch (IdentityProviderException $e) {
