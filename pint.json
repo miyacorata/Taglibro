@@ -2,7 +2,8 @@
     "preset": "laravel",
     "cache-file": ".pint.cache",
     "exclude": [
-        "database/migrations"
+        "database/migrations",
+        "lang"
     ],
     "rules": {
         "concat_space": false,
