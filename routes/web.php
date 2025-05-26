@@ -12,6 +12,10 @@ Route::get('/login', [App\Http\Controllers\AuthController::class, 'login'])->nam
 Route::get('/callback', [App\Http\Controllers\AuthController::class, 'callback']);
 Route::get('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
-Route::get('/dashboard', function () {
-    return view('dashboard', ['user' => Session::get('user'), 'token' => Session::get('access_token')]);
-})->middleware(Authenticate::class.':cognito')->name('dashboard');
+Route::get('/dashboard', [\App\Http\Controllers\UserDataController::class, 'index'])
+    ->middleware(Authenticate::class.':cognito')->name('dashboard');
+Route::post('/user/update', [\App\Http\Controllers\UserDataController::class, 'update'])->name('user.update');
+
+Route::get('/test', function () {
+    return dump(Auth::user()->getAuthIdentifier(), Session::get('user'));
+});
