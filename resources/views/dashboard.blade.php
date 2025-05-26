@@ -45,7 +45,7 @@
                 </tr>
             </table>
             <button class="button" id="open-form">ユーザー情報を変更する</button>
-            <div class="card" style="display: none;" id="form">
+            <div class="card is-display-none" id="form">
                 <header class="card-header">
                     <p class="card-header-title">ユーザー情報を変更する</p>
                 </header>
@@ -91,8 +91,14 @@
             const of = document.getElementById('open-form');
             const cf = document.getElementById('close-form');
             const form = document.getElementById('form');
+            console.dir(form);
             of.addEventListener('click', () => {
-                form.classList.add('is-active');
+                form.classList.remove('is-display-none');
+                of.classList.add('is-display-none');
+            });
+            cf.addEventListener('click', () => {
+                form.classList.add('is-display-none');
+                of.classList.remove('is-display-none');
             });
         });
     </script>
