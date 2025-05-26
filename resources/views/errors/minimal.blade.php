@@ -5,7 +5,7 @@
         <div class="hero-body has-text-centered">
             <p class="title mb-2 has-text-danger">@yield('code') @yield('title', 'Error')</p>
             <p class="subtitle">@yield('message')</p>
-            <a href="{{ url('/') }}" class="button">Return to Home</a>
+            <a href="{{ url('/') }}" class="button">トップページへ</a>
         </div>
     </section>
 @endsection
