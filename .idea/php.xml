@@ -148,6 +148,19 @@
       <path value="$PROJECT_DIR$/vendor/nesbot/carbon" />
       <path value="$PROJECT_DIR$/vendor/barryvdh/laravel-ide-helper" />
       <path value="$PROJECT_DIR$/vendor/barryvdh/reflection-docblock" />
+      <path value="$PROJECT_DIR$/vendor/dragon-code/pretty-array" />
+      <path value="$PROJECT_DIR$/vendor/dragon-code/support" />
+      <path value="$PROJECT_DIR$/vendor/dragon-code/contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php81" />
+      <path value="$PROJECT_DIR$/vendor/archtechx/enums" />
+      <path value="$PROJECT_DIR$/vendor/laravel-lang/lang" />
+      <path value="$PROJECT_DIR$/vendor/laravel-lang/publisher" />
+      <path value="$PROJECT_DIR$/vendor/laravel-lang/native-country-names" />
+      <path value="$PROJECT_DIR$/vendor/laravel-lang/native-currency-names" />
+      <path value="$PROJECT_DIR$/vendor/laravel-lang/locales" />
+      <path value="$PROJECT_DIR$/vendor/laravel-lang/locale-list" />
+      <path value="$PROJECT_DIR$/vendor/laravel-lang/config" />
+      <path value="$PROJECT_DIR$/vendor/laravel-lang/native-locale-names" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.3" />
