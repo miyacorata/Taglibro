@@ -44,7 +44,10 @@
                     </td>
                 </tr>
             </table>
-            <button class="button" id="open-form">ユーザー情報を変更する</button>
+            <button class="button" id="open-form">
+                <span class="icon"><i class="fa-solid fa-user-pen"></i></span>
+                <span>ユーザー情報を変更する</span>
+            </button>
             <div class="card is-display-none" id="form">
                 <header class="card-header">
                     <p class="card-header-title">ユーザー情報を変更する</p>
@@ -74,10 +77,16 @@
                         </div>
                         <div class="field is-grouped is-justify-content-space-between">
                             <div class="control">
-                                <button type="button" class="button is-warning" id="close-form">キャンセル</button>
+                                <button type="button" class="button is-warning" id="close-form">
+                                    <span class="icon"><i class="fa-solid fa-xmark"></i></span>
+                                    <span>キャンセル</span>
+                                </button>
                             </div>
                             <div class="control">
-                                <button type="submit" class="button is-primary">保存する</button>
+                                <button type="submit" class="button is-primary">
+                                    <span class="icon"><i class="fa-solid fa-floppy-disk"></i></span>
+                                    <span>保存する</span>
+                                </button>
                             </div>
                         </div>
                     </form>
