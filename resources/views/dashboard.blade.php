@@ -56,17 +56,19 @@
                         </div>
                     </article>
                     <form action="{{ route('user.update') }}" method="post">
+                        @csrf
+                        <input type="hidden" name="user_sub" value="{{ Auth::user()->getAuthIdentifier() }}">
                         <div class="field">
                             <label class="label">アイコンURL</label>
                             <div class="control">
-                                <input class="input" type="text" placeholder="https://">
+                                <input class="input" type="text" name="icon_url" placeholder="https://" value="{{ old('icon_url', $appUser->icon_url) }}">
                             </div>
                             <p class="help"><code>https://</code> で始まるURLを入力します</p>
                         </div>
                         <div class="field">
                             <label class="label">プロフィール</label>
                             <div class="control">
-                                <textarea class="textarea" rows="5"></textarea>
+                                <textarea class="textarea" name="biography" rows="5">{{ old('biography', $appUser->biography) }}</textarea>
                             </div>
                             <p class="help">いい感じの自己紹介を入れましょう Markdown記法でリンクを掲載できます</p>
                         </div>

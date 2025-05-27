@@ -23,7 +23,8 @@ final class UserDataController extends Controller
     {
         $request->validate([
             'user_sub' => ['required', 'exists:users,sub'],
-            'icon_url' => ['url'],
+            'icon_url' => ['nullable', 'url'],
+            'biography' => ['nullable', 'string', 'max:1000'],
         ]);
 
         if ($request->post('user_sub') !== Auth::user()->getAuthIdentifier()) {
@@ -32,8 +33,9 @@ final class UserDataController extends Controller
 
         $userData = User::whereSub(Auth::user()->getAuthIdentifier())->firstOrFail();
         $userData->icon_url = $request->post('icon_url');
+        $userData->biography = $request->post('biography');
         $userData->save();
 
-        return to_route('dashboard')->with('message', 'ユーザー情報を更新しました');
+        return redirect(route('dashboard'))->with('message', 'ユーザー情報を更新しました');
     }
 }
