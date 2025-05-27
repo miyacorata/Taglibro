@@ -7,30 +7,7 @@
 
     <title>@if(View::hasSection('title')) @yield('title') - @endif{{ config('app.name') }}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css" crossorigin="anonymous">
-    <style>
-        :root {
-            --bulma-primary-h: 87deg;
-            --bulma-primary-s: 58%;
-            --bulma-primary-l: 71%;
-            --bulma-link-h: 190deg;
-            --bulma-link-s: 38%;
-            --bulma-link-l: 61%;
-            --bulma-success-h: 87deg;
-            --bulma-success-s: 58%;
-            --bulma-success-l: 71%;
-            --bulma-warning-h: 43deg;
-            --bulma-warning-l: 70%;
-            --bulma-danger-h: 352deg;
-            --bulma-danger-s: 64%;
-            --bulma-danger-l: 65%;
-            --bulma-family-primary: 'IBM Plex Sans JP', sans-serif;
-            --bulma-family-code: 'IBM Plex Mono',monospace;
-        }
-
-        body {
-            min-height: 100vh;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url('/css/style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=IBM+Plex+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -55,7 +32,17 @@
         @foreach($errors->all() as $error)
             <p>{{ $error }}</p>
         @endforeach
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const clb = document.querySelector('.notification > button.delete');
+                clb.addEventListener('click', () => {
+                    clb.parentNode.parentNode.removeChild(clb.parentNode);
+                });
+            });
+
+        </script>
     </div>
+
 @endif
 
 @yield('main')

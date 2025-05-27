@@ -1,0 +1,30 @@
+:root {
+    --bulma-primary-h: 87deg;
+    --bulma-primary-s: 58%;
+    --bulma-primary-l: 71%;
+    --bulma-link-h: 190deg;
+    --bulma-link-s: 38%;
+    --bulma-link-l: 61%;
+    --bulma-success-h: 87deg;
+    --bulma-success-s: 58%;
+    --bulma-success-l: 71%;
+    --bulma-warning-h: 43deg;
+    --bulma-warning-l: 70%;
+    --bulma-danger-h: 352deg;
+    --bulma-danger-s: 64%;
+    --bulma-danger-l: 65%;
+    --bulma-family-primary: 'IBM Plex Sans JP', sans-serif;
+    --bulma-family-code: 'IBM Plex Mono',monospace;
+}
+
+body {
+    min-height: 100vh;
+}
+
+body > .notification {
+    position: fixed;
+    z-index: 999;
+    bottom: 30px;
+    right: 30px;
+    width: 50%;
+}
