@@ -53,8 +53,9 @@
         <p>{{ config('app.name') }} - {{ $_SERVER['HTTP_HOST'] }}</p>
         <nav class="breadcrumb has-bullet-separator has-text-weight-medium is-centered mt-2">
             <ul>
-                <li><a href="{{ url('/') }}" class="pl-3">Home</a></li>
+                <li><a href="{{ url('/') }}" class="pl-3">トップページ</a></li>
                 <li><a href="https://github.com/miyacorata/taglibro" target="_blank">GitHub</a></li>
+                <li><a href="{{ url('/dashboard') }}">管理画面</a></li>
             </ul>
         </nav>
         <p>
