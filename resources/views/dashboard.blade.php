@@ -19,9 +19,12 @@
         <div class="container content">
             <h2>ユーザー情報</h2>
             <div class="subtitle is-5">ようこそ、{{ $user['name'] ?? $user['preferred_username'] }} さん。</div>
-            @if(!empty($message))
+            @if(session("message"))
                 <div class="message is-info">
-                    <div class="message-body">{{ $message }}</div>
+                    <div class="message-body">
+                        <i class="fa-solid fa-circle-info"></i>
+                        {{ session("message") }}
+                    </div>
                 </div>
             @endif
             <table class="table is-fullwidth">
@@ -50,7 +53,10 @@
             </button>
             <div class="card is-display-none" id="form">
                 <header class="card-header">
-                    <p class="card-header-title">ユーザー情報を変更する</p>
+                    <p class="card-header-title">
+                        <span class="icon"><i class="fa-solid fa-user-pen"></i></span>
+                        <span>ユーザー情報を変更する</span>
+                    </p>
                 </header>
                 <div class="card-content">
                     <article class="message is-light is-small">
