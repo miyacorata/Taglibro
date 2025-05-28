@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('content');
             $table->string('top_image_url')->nullable();
             $table->bigInteger('user');
+            $table->boolean('published')->default(false);
             $table->datetimes();
             $table->softDeletesDatetime();
         });
