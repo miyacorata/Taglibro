@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleDataController;
 use App\Http\Controllers\UserDataController;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
@@ -13,7 +14,8 @@ Route::get('/login', [App\Http\Controllers\AuthController::class, 'login'])->nam
 Route::get('/callback', [App\Http\Controllers\AuthController::class, 'callback']);
 Route::get('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
-Route::middleware(Authenticate::class.':cognito')->group(function () {
+Route::prefix('admin')->middleware(Authenticate::class.':cognito')->group(function () {
     Route::get('/dashboard', [UserDataController::class, 'index'])->name('dashboard');
     Route::post('/user/update', [UserDataController::class, 'update'])->name('user.update');
+    Route::resource('/article', ArticleDataController::class)->except(['index', 'show'])->names('article');
 });

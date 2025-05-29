@@ -55,7 +55,7 @@
             <ul>
                 <li><a href="{{ url('/') }}" class="pl-3">トップページ</a></li>
                 <li><a href="https://github.com/miyacorata/taglibro" target="_blank">GitHub</a></li>
-                <li><a href="{{ url('/dashboard') }}">管理画面</a></li>
+                <li><a href="{{ route('dashboard') }}">管理画面</a></li>
             </ul>
         </nav>
         <p>
