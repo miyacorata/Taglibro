@@ -72,7 +72,7 @@ class AuthController extends Controller
             $appUser->email = $userData['email'];
             $appUser->save();
 
-            return redirect('/dashboard');
+            return redirect(route('dashboard'));
         } catch (IdentityProviderException $e) {
             \Illuminate\Log\log()->error($e->getMessage(), [$e->getCode(), $e->getLine(), $e->getFile(), $e->getTraceAsString()]);
             return redirect('/')->withErrors($e->getMessage());
