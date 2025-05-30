@@ -45,6 +45,11 @@ class Article extends Model
 {
     use SoftDeletes;
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
