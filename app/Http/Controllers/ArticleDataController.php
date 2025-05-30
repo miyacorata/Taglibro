@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\User;
+use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
-class ArticleDataController extends Controller
+final class ArticleDataController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,7 +31,26 @@ class ArticleDataController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => ['required'],
+            'description' => ['nullable'],
+            'top_image_url' => ['nullable', 'url'],
+            'slug' => ['nullable', 'unique:articles,slug', "regex:/^[A-Za-z0-9\-._~!$&'()*+,;=:@%]*$/"],
+            'content' => ['required'],
+            'published' => ['required', 'boolean'],
+        ]);
+
+        $article = new Article();
+        $article->title = $request->post('title');
+        $article->description = $request->post('description');
+        $article->top_image_url = $request->post('top_image_url');
+        $article->slug = $request->post('slug') ?? Str::orderedUuid();
+        $article->content = $request->post('content');
+        $article->published = boolval($request->post('published'));
+        $article->user = User::whereSub(Auth::user()->getAuthIdentifier())->firstOrFail();
+        $article->save();
+
+        return redirect()->route('dashboard')->with('message', '記事を作成しました');
     }
 
     /**
