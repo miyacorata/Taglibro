@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('title');
             $table->text('content');
+            $table->string('description')->nullable();
             $table->string('top_image_url')->nullable();
             $table->bigInteger('user');
             $table->boolean('published')->default(false);
