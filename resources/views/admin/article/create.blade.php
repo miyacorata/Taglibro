@@ -3,12 +3,7 @@
 @section('title', '記事新規作成')
 
 @section('main')
-    <section class="hero is-light is-small section py-0">
-        <div class="hero-body container px-0">
-            <p class="title mb-1 is-4">記事の新規作成</p>
-            <p class="subtitle is-6">Krei novan artikolon</p>
-        </div>
-    </section>
+    @include('admin.admin-navbar', ['title' => '記事新規作成', 'title_eo' => 'Krei novan artikolon'])
     <section class="section pt-5">
         <div class="container">
             <form action="{{ route('article.store') }}" method="post" id="article-form">

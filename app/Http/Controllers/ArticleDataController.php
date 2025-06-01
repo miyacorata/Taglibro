@@ -15,7 +15,8 @@ final class ArticleDataController extends Controller
      */
     public function index()
     {
-        //
+        $articles = Article::with('user')->get();
+        return view('admin.article.index', compact('articles'));
     }
 
     /**
@@ -47,10 +48,10 @@ final class ArticleDataController extends Controller
         $article->slug = $request->post('slug') ?? Str::orderedUuid();
         $article->content = $request->post('content');
         $article->published = boolval($request->post('published'));
-        $article->user = User::whereSub(Auth::user()->getAuthIdentifier())->firstOrFail();
+        $article->user = User::whereSub(Auth::user()->getAuthIdentifier())->firstOrFail()->id;
         $article->save();
 
-        return redirect()->route('dashboard')->with('message', '記事を作成しました');
+        return redirect()->route('article.index')->with('message', '記事を作成しました');
     }
 
     /**

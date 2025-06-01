@@ -9,12 +9,7 @@
 @endphp
 
 @section('main')
-    <section class="hero is-light is-small section py-0">
-        <div class="hero-body container px-0">
-            <p class="title mb-1 is-4">管理画面</p>
-            <p class="subtitle is-6">Administra ekrano</p>
-        </div>
-    </section>
+    @include('admin.admin-navbar')
     <section class="section">
         <div class="container content">
             <h2>ユーザー情報</h2>
