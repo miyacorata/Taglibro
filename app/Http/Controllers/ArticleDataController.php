@@ -15,7 +15,8 @@ final class ArticleDataController extends Controller
      */
     public function index()
     {
-        $articles = Article::with('user')->get();
+        $user = User::whereSub(Auth::user()->getAuthIdentifier())->firstOrFail();
+        $articles = Article::with('user')->where('user', $user->id)->get();
         return view('admin.article.index', compact('articles'));
     }
 
