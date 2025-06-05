@@ -37,7 +37,7 @@
                 <thead>
                 <tr>
                     <th style="width: 160px">操作</th>
-                    <th style="width: 120px">作成 / 更新</th>
+                    <th style="width: 180px">作成 / 更新</th>
                     <th style="width: 110px">状態</th>
                     <th>記事</th>
                 </tr>
@@ -55,7 +55,10 @@
                                 <span>開く</span>
                             </a>
                         </td>
-                        <td>{{ $article->created_at->format('Y/m/d') }}<br>{{ $article->updated_at->format('Y/m/d') }}</td>
+                        <td>
+                            {{ $article->created_at->format('Y/m/d') }} <span class="is-size-7">{{ $article->created_at->format('H:i') }}</span><br>
+                            {{ $article->updated_at->format('Y/m/d') }} <span class="is-size-7">{{ $article->updated_at->format('H:i') }}</span>
+                        </td>
                         <td>
                             <span class="tag {{ $article->published ? 'is-primary' : 'is-info'}} mr-1">
                                 @if($article->published)

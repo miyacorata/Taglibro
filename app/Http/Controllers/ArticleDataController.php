@@ -17,7 +17,7 @@ final class ArticleDataController extends Controller
     public function index()
     {
         $user = User::whereSub(Auth::user()->getAuthIdentifier())->firstOrFail();
-        $articles = Article::with('user')->where('user_id', $user->id)->get();
+        $articles = Article::with('user')->where('user_id', $user->id)->orderByDesc('created_at')->get();
         return view('admin.article.index', compact('articles'));
     }
 
@@ -41,6 +41,8 @@ final class ArticleDataController extends Controller
             'slug' => ['nullable', 'unique:articles,slug', "regex:/^[A-Za-z0-9\-._~!$&'()*+,;=:@%]*$/"],
             'content' => ['required'],
             'published' => ['required', 'boolean'],
+        ], [
+            'slug.regex' => 'スラッグに使えない文字が含まれています。',
         ]);
 
         $article = new Article();
@@ -84,6 +86,8 @@ final class ArticleDataController extends Controller
             'slug' => ['nullable', Rule::unique('articles')->ignore($article->id), "regex:/^[A-Za-z0-9\-._~!$&'()*+,;=:@%]*$/"],
             'content' => ['required'],
             'published' => ['required', 'boolean'],
+        ], [
+            'slug.regex' => 'スラッグに使えない文字が含まれています。',
         ]);
 
         if (!$this->isOwnArticle($article)) {
@@ -106,7 +110,11 @@ final class ArticleDataController extends Controller
      */
     public function destroy(Article $article)
     {
-        //
+        if (!$this->isOwnArticle($article)) {
+            abort(403, 'それはあなたの記事ではない');
+        }
+        $article->delete();
+        return redirect()->route('article.index')->with('message', '記事「'.$article->title.'」を削除しました');
     }
 
     private function isOwnArticle(Article $article): bool

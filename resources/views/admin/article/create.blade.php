@@ -57,7 +57,7 @@
                         たぶんVSCodeあたりで書いてコピペしたほうがいいですよ
                     </p>
                 </div>
-                <div class="field is-grouped is-justify-content-space-between">
+                <div class="field is-grouped is-justify-content-end">
                     <p class="control">
                         <button type="submit" class="button is-info" id="draft">
                             <span class="icon"><i class="fa-solid fa-floppy-disk"></i></span>

@@ -64,33 +64,54 @@
                         たぶんVSCodeあたりで書いてコピペしたほうがいいですよ
                     </p>
                 </div>
-                <div class="field is-grouped is-justify-content-space-between">
-                    <p class="control">
-                        <button type="submit" class="button is-info" id="draft">
-                            <span class="icon"><i class="fa-solid fa-floppy-disk"></i></span>
-                            <span>下書き保存する</span>
-                        </button>
-                    </p>
-                    <p class="control">
-                        <button type="submit" class="button is-primary" id="publish">
-                            <span class="icon"><i class="fa-solid fa-paper-plane"></i></span>
-                            <span>保存して公開する</span>
-                        </button>
-                    </p>
-                    <script>
-                        document.addEventListener('DOMContentLoaded', () => {
-                            /** @type {HTMLFormElement} */
-                            const form = document.getElementById('article-form');
-                            document.getElementById('publish').addEventListener('click', (event) => {
-                                event.preventDefault();
-                                if (form.reportValidity() && confirm('記事を公開します。よろしいですか？')) {
-                                    document.getElementById('is-published').setAttribute('value', '1');
-                                    form.submit();
-                                }
+                <div class="is-display-flex is-justify-content-space-between">
+                    <div class="field">
+                        <p class="control">
+                            <button type="button" class="button is-light" id="delete" style="background-color: #BA6EA5">
+                                <span class="icon"><i class="fa-solid fa-delete-left"></i></span>
+                                <span>削除する</span>
+                            </button>
+                        </p>
+                    </div>
+                    <div class="field is-grouped is-justify-content-end">
+                        <p class="control">
+                            <button type="submit" class="button is-info" id="draft">
+                                <span class="icon"><i class="fa-solid fa-floppy-disk"></i></span>
+                                <span>下書き保存する</span>
+                            </button>
+                        </p>
+                        <p class="control">
+                            <button type="submit" class="button is-primary" id="publish">
+                                <span class="icon"><i class="fa-solid fa-paper-plane"></i></span>
+                                <span>保存して公開する</span>
+                            </button>
+                        </p>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', () => {
+                                /** @type {HTMLFormElement} */
+                                const form = document.getElementById('article-form');
+                                document.getElementById('publish').addEventListener('click', (event) => {
+                                    event.preventDefault();
+                                    if (form.reportValidity() && confirm('記事を公開します。よろしいですか？')) {
+                                        document.getElementById('is-published').setAttribute('value', '1');
+                                        form.submit();
+                                    }
+                                });
+                                /** @type {HTMLFormElement} */
+                                const deleteForm = document.getElementById('article-delete');
+                                document.getElementById('delete').addEventListener('click', () => {
+                                    if (confirm('記事を削除します。よろしいですか？')) {
+                                        deleteForm.submit();
+                                    }
+                                });
                             });
-                        });
-                    </script>
+                        </script>
+                    </div>
                 </div>
+            </form>
+            <form action="{{ route('article.destroy', ['article' => $article]) }}" method="post" id="article-delete">
+                @csrf
+                @method('delete')
             </form>
         </div>
     </section>

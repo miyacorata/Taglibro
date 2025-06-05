@@ -153,4 +153,10 @@ return [
     'uppercase'              => ':Attributeは、大文字で入力してください。',
     'url'                    => ':Attributeは、有効なURL形式で指定してください。',
     'uuid'                   => ':Attributeは、有効なUUIDである必要があります。',
+
+    // カスタムフィールド名
+    'attributes' => [
+        'top_image_url' => 'サムネイル画像URL',
+        'slug' => 'スラッグ',
+    ],
 ];
