@@ -15,13 +15,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $content
  * @property string|null $description
  * @property string|null $top_image_url
- * @property \App\Models\User|null $user
+ * @property int $user_id
  * @property bool $published
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tag> $tags
  * @property-read int|null $tags_count
+ * @property-read \App\Models\User|null $user
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Article newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Article newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Article onlyTrashed()
@@ -36,7 +37,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Article whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Article whereTopImageUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Article whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Article whereUser($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Article whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Article withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Article withoutTrashed()
  * @mixin \Eloquent
@@ -57,7 +58,7 @@ class Article extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user','id');
+        return $this->belongsTo(User::class);
     }
 
     protected function casts(): array

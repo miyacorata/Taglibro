@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('content');
             $table->string('description')->nullable();
             $table->string('top_image_url')->nullable();
-            $table->bigInteger('user');
+            $table->bigInteger('user_id');
             $table->boolean('published')->default(false);
             $table->datetimes();
             $table->softDeletesDatetime();
