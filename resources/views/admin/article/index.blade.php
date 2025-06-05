@@ -14,6 +14,10 @@
         table.table > tbody > tr > td {
             vertical-align: middle;
         }
+        table.table > tbody > tr > td:not(:last-child),
+        table.table > thead > tr > th:not(:last-child) {
+            text-align: center;
+        }
     </style>
 @endsection
 
@@ -33,7 +37,8 @@
                 <thead>
                 <tr>
                     <th style="width: 160px">操作</th>
-                    <th style="width: 140px">投稿日時</th>
+                    <th style="width: 120px">作成 / 更新</th>
+                    <th style="width: 110px">状態</th>
                     <th>記事</th>
                 </tr>
                 </thead>
@@ -50,7 +55,18 @@
                                 <span>開く</span>
                             </a>
                         </td>
-                        <td>{{ $article->created_at->format('Y/m/d') }}</td>
+                        <td>{{ $article->created_at->format('Y/m/d') }}<br>{{ $article->updated_at->format('Y/m/d') }}</td>
+                        <td>
+                            <span class="tag {{ $article->published ? 'is-primary' : 'is-info'}} mr-1">
+                                @if($article->published)
+                                    <span class="icon"><i class="fa-solid fa-paper-plane"></i></span>
+                                    <span>公開済</span>
+                                @else
+                                    <span class="icon"><i class="fa-solid fa-floppy-disk"></i></span>
+                                    <span>下書き</span>
+                                @endif
+                            </span>
+                        </td>
                         <td>
                             <strong>{{ $article->title }}</strong><br>
                             <span class="is-size-7">

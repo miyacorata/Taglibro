@@ -7,6 +7,7 @@ use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 final class ArticleDataController extends Controller
 {
@@ -16,7 +17,7 @@ final class ArticleDataController extends Controller
     public function index()
     {
         $user = User::whereSub(Auth::user()->getAuthIdentifier())->firstOrFail();
-        $articles = Article::with('user')->where('user', $user->id)->get();
+        $articles = Article::with('user')->where('user_id', $user->id)->get();
         return view('admin.article.index', compact('articles'));
     }
 
@@ -49,10 +50,10 @@ final class ArticleDataController extends Controller
         $article->slug = $request->post('slug') ?? Str::orderedUuid();
         $article->content = $request->post('content');
         $article->published = boolval($request->post('published'));
-        $article->user = User::whereSub(Auth::user()->getAuthIdentifier())->firstOrFail()->id;
+        $article->user_id = User::whereSub(Auth::user()->getAuthIdentifier())->firstOrFail()->id;
         $article->save();
 
-        return redirect()->route('article.index')->with('message', '記事を作成しました');
+        return redirect()->route('article.index')->with('message', '記事「'.$article->title.'」を作成しました');
     }
 
     /**
@@ -60,7 +61,7 @@ final class ArticleDataController extends Controller
      */
     public function show(Article $article)
     {
-        //
+        return redirect()->route('article.edit', ['article' => $article]);
     }
 
     /**
@@ -68,7 +69,7 @@ final class ArticleDataController extends Controller
      */
     public function edit(Article $article)
     {
-        //
+        return view('admin.article.edit', compact('article'));
     }
 
     /**
@@ -76,7 +77,28 @@ final class ArticleDataController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        //
+        $request->validate([
+            'title' => ['required'],
+            'description' => ['nullable'],
+            'top_image_url' => ['nullable', 'url'],
+            'slug' => ['nullable', Rule::unique('articles')->ignore($article->id), "regex:/^[A-Za-z0-9\-._~!$&'()*+,;=:@%]*$/"],
+            'content' => ['required'],
+            'published' => ['required', 'boolean'],
+        ]);
+
+        if (!$this->isOwnArticle($article)) {
+            abort(403, 'それはあなたの記事ではない');
+        }
+
+        $article->title = $request->post('title');
+        $article->description = $request->post('description');
+        $article->top_image_url = $request->post('top_image_url');
+        if ($request->post('slug')) $article->slug = $request->post('slug');
+        $article->content = $request->post('content');
+        $article->published = boolval($request->post('published'));
+        $article->save();
+
+        return redirect()->route('article.index')->with('message', '記事「'.$article->title.'」を編集しました');
     }
 
     /**
@@ -85,5 +107,10 @@ final class ArticleDataController extends Controller
     public function destroy(Article $article)
     {
         //
+    }
+
+    private function isOwnArticle(Article $article): bool
+    {
+        return $article->user_id === User::whereSub(Auth::user()->getAuthIdentifier())->firstOrFail()->id;
     }
 }
