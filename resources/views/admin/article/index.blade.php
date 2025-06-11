@@ -33,6 +33,15 @@
                     </div>
                 </div>
             @endif
+            <div class="is-display-flex is-justify-content-space-between">
+                <div>{{ $articles->count() }}件の記事</div>
+                <div>
+                    <a href="{{ route('article.create') }}" class="button is-link">
+                        <span class="icon"><i class="fa-solid fa-file"></i></span>
+                        <span>新規作成</span>
+                    </a>
+                </div>
+            </div>
             <table class="table is-fullwidth">
                 <thead>
                 <tr>
@@ -78,6 +87,15 @@
                         </td>
                     </tr>
                 @empty
+                    <tr>
+                        <td colspan="4">
+                            <article class="message is-warning">
+                                <div class="message-body">
+                                    <i class="fa-solid fa-circle-info"></i> 記事がありません
+                                </div>
+                            </article>
+                        </td>
+                    </tr>
                 @endforelse
                 </tbody>
             </table>
