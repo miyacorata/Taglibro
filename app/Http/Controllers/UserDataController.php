@@ -12,7 +12,7 @@ final class UserDataController extends Controller
     public function index()
     {
         $appUser = User::whereSub(Auth::user()->getAuthIdentifier())->firstOrFail();
-        return view('dashboard', [
+        return view('admin.dashboard', [
             'user' => Session::get('user'),
             'appUser' => $appUser,
             'token' => Session::get('access_token'),
