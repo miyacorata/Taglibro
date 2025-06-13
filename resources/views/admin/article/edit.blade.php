@@ -77,7 +77,7 @@
                         <p class="control">
                             <button type="submit" class="button is-info" id="draft">
                                 <span class="icon"><i class="fa-solid fa-floppy-disk"></i></span>
-                                <span>下書き保存する</span>
+                                <span>非公開に切り替えて保存する</span>
                             </button>
                         </p>
                         <p class="control">
