@@ -31,3 +31,8 @@ body > .notification {
     right: 30px;
     width: 50%;
 }
+
+.content > pre:has(code.hljs) {
+    padding: 0;
+    background: none;
+}

@@ -8,26 +8,66 @@
 
 @section('title', $article->title)
 
+@section('head')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark-dimmed.min.css" integrity="sha512-zcatBMvxa7rT7dDklfjauWsfiSFParF+hRfCdf4Zr40/MmA1gkFcBRbop0zMpvYF3FmznYFgcL8wlcuO/GwHoA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <style>
+        .user-icon {
+            border-radius: 10%;
+            box-shadow: 0 0 5px lightgray;
+        }
+        .user-icon-placeholder {
+            height: 100%;
+            background-color: lightgray;
+            text-align: center;
+            color: gray;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5em;
+        }
+    </style>
+@endsection
+
 @section('main')
     <div class="container">
         <section class="section">
             <h1 class="title is-2 mb-2">{{ $article->title }}</h1>
             <div class="subtitle is-7 has-text-black-20">
-                Kreita je {{ $article->created_at->format('Y/m/d H:i:s') }}
+                <i class="fa-solid fa-file-lines mr-1"></i>{{ $article->created_at->format('Y/m/d H:i:s') }}
                 @if($article->updated_at->notEqualTo($article->created_at))
-                    , Ĝisdatigita je {{ $article->updated_at->format('Y/m/d H:i:s') }}
+                    <i class="fa-solid fa-rotate-right mr-1 ml-3"></i>{{ $article->updated_at->format('Y/m/d H:i:s') }}
                 @endif
             </div>
         </section>
-        <section class="section columns pt-0" style="flex-direction: row-reverse">
-            <div class="column is-one-quarter">
-                1/4
-            </div>
+        <section class="section columns pt-0">
             <div class="column">
-                <div class="content" id="article-content">
-                    {!! Str::markdown($article->content, ['html_input' => 'escape', 'arrow_unsafe_links' => false]) !!}
-                </div>
+                <article class="content" id="article-content">
+                    @if(!empty($article->top_image_url))
+                        <div id="top_image" class="image mb-5">
+                            <img src="{{ $article->top_image_url }}" alt="{{ $article->title }}">
+                        </div>
+                    @endif
+                    {!! $converted_article_content !!}
+                </article>
             </div>
+            <aside class="column is-one-quarter">
+                <div class="is-display-flex mb-4">
+                    <div class="image is-48x48 mr-3">
+                        @if(!empty($article->user->icon_url))
+                            <img src="{{ $article->user->icon_url }}" alt="{{ $article->user->preferred_username }}" class="user-icon">
+                        @else
+                            <div class="user-icon user-icon-placeholder"><i class="fa-solid fa-user"></i></div>
+                        @endif
+                    </div>
+                    <div>
+                        <h2 class="title is-4">{{ $article->user->name }}</h2>
+                        <div class="subtitle is-6">{{ '@'.$article->user->preferred_username }}</div>
+                    </div>
+                </div>
+                <div>{!! $converted_profile_biography !!}</div>
+            </aside>
         </section>
     </div>
 @endsection
