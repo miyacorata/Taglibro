@@ -50,7 +50,7 @@ class VisitorController extends Controller
         $profile_env->addExtension(new ExternalLinkExtension());
         $profile_env->addExtension(new InlinesOnlyExtension());
         $profile_converter = new MarkdownConverter($profile_env);
-        $converted_profile_biography = $profile_converter->convert($article->user->biography);
+        $converted_profile_biography = $profile_converter->convert($article->user->biography ?? '');
 
 
 
