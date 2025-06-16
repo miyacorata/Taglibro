@@ -97,7 +97,7 @@
                         <div class="subtitle is-6">{{ '@'.$article->user->preferred_username }}</div>
                     </div>
                 </div>
-                <div>{!! $converted_profile_biography !!}</div>
+                <div>{!! nl2br($converted_profile_biography) !!}</div>
             </aside>
         </section>
     </div>
