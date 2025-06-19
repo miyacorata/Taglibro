@@ -42,7 +42,7 @@ return [
         'redirect' => env('COGNITO_REDIRECT_URI'),
         'user_pool_id'  => env('COGNITO_USER_POOL_ID'),
         'region'  => env('COGNITO_REGION'),
-        'arrowed_group' => explode(',', env('COGNITO_ARROWED_GROUP')) ?: null,
+        'arrowed_group' => !empty(env('COGNITO_ARROWED_GROUP')) ? explode(',', env('COGNITO_ARROWED_GROUP')) : null,
     ],
 
 ];
