@@ -59,7 +59,7 @@
                                 <span class="icon"><i class="fa-solid fa-pencil"></i></span>
                                 <span>編集</span>
                             </a>
-                            <a href="{{ route('article.edit', ['article' => $article->slug]) }}" class="button is-small">
+                            <a href="{{ route('viewArticle', ['slug' => $article->slug]) }}" target="_blank" class="button is-small">
                                 <span class="icon"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
                                 <span>開く</span>
                             </a>
