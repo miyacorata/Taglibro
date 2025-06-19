@@ -56,6 +56,13 @@ class AuthController extends Controller
                 return redirect('/')->withErrors('認証情報のデコードに失敗しました');
             }
 
+            // ログイン許可グループとユーザーの所属グループの確認
+            if (!empty(config('services.cognito.arrowed_group'))) {
+                if (count(array_intersect($userData['group'], config('services.cognito.arrowed_group'))) === 0) {
+                    abort(403, 'あなたのアカウントはログイン許可グループに属していません');
+                }
+            }
+
             // セッションにユーザー情報を保存
             Session::put('user', $userData);
             Session::put('access_token', $jwt);
