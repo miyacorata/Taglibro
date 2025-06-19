@@ -33,7 +33,7 @@
                     <div class="field has-addons mb-0">
                         <p class="control">
                             <a class="button is-static is-display-none-touch">
-                                {{ url('/').'/article/{year}/{month}/' }}
+                                {{ url('/').'/article/' }}
                             </a>
                         </p>
                         <p class="control is-expanded">
