@@ -11,7 +11,16 @@
 @section('head')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark-dimmed.min.css" integrity="sha512-zcatBMvxa7rT7dDklfjauWsfiSFParF+hRfCdf4Zr40/MmA1gkFcBRbop0zMpvYF3FmznYFgcL8wlcuO/GwHoA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
-    <script>hljs.highlightAll();</script>
+    <script>
+        hljs.highlightAll();
+        document.addEventListener('DOMContentLoaded', () => {
+            const shareButton = document.getElementById('misskey-share')
+            shareButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                window.open(shareButton.getAttribute('href'), '_blank', 'width=800,height=800');
+            });
+        });
+    </script>
     <style>
         .user-icon {
             border-radius: 10%;
@@ -51,6 +60,21 @@
                     @endif
                     {!! $converted_article_content !!}
                 </article>
+                <hr>
+                <div id="share">
+                    <div>
+                        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                        <a href="https://misskey-hub.net/ja/share/?text={{ urlencode($article->title.' - '.config('app.name').PHP_EOL.url()->current()) }}" target="_blank" class="button is-small is-dark py-1" id="misskey-share">
+                            <span class="icon is-medium"><img src="{{ asset('images/misskey.png') }}" alt="Misskey"></span>
+                            <span>ノート</span>
+                        </a>
+                    </div>
+                    <p class="mt-4 is-size-7">
+                        <a href="https://misskey-hub.net/ja/brand-assets/" target="_blank">Misskeyのロゴ</a> は
+                        <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.ja" target="_blank" title="クリエイティブ・コモンズ・ライセンス 表示-継承 4.0 国際">CC BY-SA 4.0</a>
+                        で提供されています。
+                    </p>
+                </div>
             </div>
             <aside class="column is-one-quarter">
                 <div class="is-display-flex mb-4">
