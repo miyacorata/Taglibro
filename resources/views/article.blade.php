@@ -49,6 +49,13 @@
                     <i class="fa-solid fa-rotate-right mr-1 ml-3"></i>{{ $article->updated_at->format('Y/m/d H:i:s') }}
                 @endif
             </div>
+            @if($article->tags->count())
+                <div class="tags">
+                    @foreach($article->tags as $tag)
+                        <span class="tag is-link is-light">{{ $tag->tag }}</span>
+                    @endforeach
+                </div>
+            @endif
         </section>
         <section class="section columns pt-0">
             <div class="column">

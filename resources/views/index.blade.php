@@ -62,9 +62,12 @@
                             <p class="title is-4 mb-3">{{ $article->title }}</p>
                             <p class="content">{{ $article->description }}</p>
                             <div class="tags">
-                                <span class="tag is-link is-light">{{ $article->created_at->format('Y/m/d') }}</span>
-                                <span class="tag is-primary">タグ2</span>
-                                <span class="tag is-warning">タグ3</span>
+                                <span class="tag is-light mr-2">
+                                    <i class="fa-solid fa-file-lines mr-1"></i>{{ $article->created_at->format('Y/m/d') }}
+                                </span>
+                                @foreach($article->tags as $tag)
+                                    <span class="tag is-link is-light">{{ $tag->tag }}</span>
+                                @endforeach
                             </div>
                         </div>
                     </a>
