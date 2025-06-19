@@ -98,6 +98,15 @@
                     </div>
                 </div>
                 <div>{!! nl2br($converted_profile_biography) !!}</div>
+                @auth
+                    <div class="mt-3">
+                        <hr>
+                        <a href="{{ route('article.edit', ['article' => $article->slug]) }}" class="button is-small">
+                            <span class="icon"><i class="fa-solid fa-file-pen"></i></span>
+                            <span>記事を編集する</span>
+                        </a>
+                    </div>
+                @endauth
             </aside>
         </section>
     </div>
