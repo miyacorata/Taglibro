@@ -5,8 +5,38 @@
 @php
 /**
  * @var $article \App\Models\Article
+ * @var $tags \Illuminate\Database\Eloquent\Collection
  */
 @endphp
+
+@section('head')
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@4.35.1/dist/tagify.min.js" integrity="sha512-Mm9/6ECyUYqvWMR15XVcY984nqM2E0YI8MJmNV6sbxFgEbj8arr4KZKc3U2P9aRjJpxDv+gjDceFh/zNofsEVg==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify@4.35.1/dist/tagify.min.css" integrity="sha512-PViFRBg+E3S/uDWbIm6exrJi+NrUFMj8PUsQ//L0j+I6STmDi0bMVuPnn8v0TqXUXZOM9Gqyo9oDY7KWrzjGUw==" crossorigin="anonymous">
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const tagInput = document.getElementById("tag-input");
+            const whiteList = "{{ $tags->implode('tag', ',') }}";
+            new Tagify(tagInput, {
+                whitelist: whiteList.split(','),
+                originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(','),
+                dropdown: {
+                    classname: "color-blue",
+                    enabled: 0,
+                    maxItems: 5,
+                    position: "text",
+                    closeOnSelect : false,
+                    highlightFirst: true,
+                },
+            });
+        });
+    </script>
+    <style>
+        .tagify {
+            /* Tagify Customize */
+            --tag-pad: 2px 6px;
+        }
+    </style>
+@endsection
 
 @section('main')
     @include('admin.admin-navbar', ['title' => '記事編集', 'title_eo' => 'Redakti artikolon'])
@@ -52,6 +82,12 @@
                         記事のURLに使う文字列です よほどのことがない限り変えないほうがいいですよ<br>
                         URI用に予約された記号類は使えません マルチバイト文字は避けるといいかもしれません
                     </p>
+                </div>
+                <div class="field">
+                    <label class="label">タグ</label>
+                    <div class="control">
+                        <input class="input" type="text" name="tags" value="{{ old('tags', $article->tags->implode('tag', ',')) }}" id="tag-input">
+                    </div>
                 </div>
                 <div class="field">
                     <label class="label">本文</label>
