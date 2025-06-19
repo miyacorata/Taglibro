@@ -24,3 +24,5 @@ yarn-error.log
 /.vscode
 /.zed
 /.pint.cache
+
+/public/favicon.ico
