@@ -9,6 +9,16 @@
 @section('title', $article->title)
 
 @section('head')
+    <meta property="og:title" content="{{ $article->title.' - '.config('app.name') }}">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:image" content="{{ $article->top_image_url ?? config('app.main_image') }}">
+    <meta property="og:site_name" content="{{ config('app.name') }}">
+    <meta property="og:description" content="{{ $article->description.' '.Str::limit($article->content, 50, ' ...') }}">
+    <meta property="og:locale" content="ja_JP">
+    <meta name="description" content="{{ $article->description.' '.Str::limit($article->content, 50, ' ...') }}">
+    <meta name="author" content="{{ $article->user->name }}">
+    <meta name="keywords" content="{{ $article->tags->implode('tag', ',') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark-dimmed.min.css" integrity="sha512-zcatBMvxa7rT7dDklfjauWsfiSFParF+hRfCdf4Zr40/MmA1gkFcBRbop0zMpvYF3FmznYFgcL8wlcuO/GwHoA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
     <script>

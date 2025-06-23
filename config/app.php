@@ -13,8 +13,9 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Cognito-SP'),
+    'name' => env('APP_NAME', 'Taglibro'),
     'description' => env('APP_DESCRIPTION', ''),
+    'main_image' => env('APP_MAIN_IMAGE_URL', ''),
 
     /*
     |--------------------------------------------------------------------------

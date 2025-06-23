@@ -8,6 +8,14 @@
 @endphp
 
 @section('head')
+    <meta property="og:title" content="{{ config('app.name') }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->full() }}">
+    <meta property="og:image" content="{{ config('app.main_image') }}">
+    <meta property="og:site_name" content="{{ config('app.name') }}">
+    <meta property="og:description" content="{{ config('app.description') }}">
+    <meta property="og:locale" content="ja_JP">
+    <meta name="description" content="{{ config('app.description') }}">
     <style>
         .thumbnail > div.placeholder {
             height: 100%;
@@ -18,6 +26,14 @@
             justify-content: center;
             align-items: center;
             font-weight: lighter;
+        }
+        .thumbnail {
+            width: 200px;
+        }
+        @media screen and (max-width: 768px) {
+            .thumbnail {
+                width: 25vw;
+            }
         }
     </style>
 @endsection
@@ -50,7 +66,7 @@
                 <div class="box">
                     <a class="media has-text-black" href="{{ route('viewArticle', ['slug' => $article->slug]) }}">
                         <div class="media-left">
-                            <figure class="image is-16by9 thumbnail" style="width: 200px">
+                            <figure class="image is-16by9 thumbnail">
                                 @if(!empty($article->top_image_url) && filter_var($article->top_image_url, FILTER_VALIDATE_URL))
                                     <img src="{{ $article->top_image_url }}" alt="{{ $article->title }}">
                                 @else
