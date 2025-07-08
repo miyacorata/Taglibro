@@ -32,7 +32,11 @@
         }
         @media screen and (max-width: 768px) {
             .thumbnail {
-                width: 25vw;
+                width: 100%;
+                margin-bottom: 1em;
+            }
+            .media-left {
+                margin-right: 0;
             }
         }
     </style>
@@ -63,16 +67,18 @@
                 </article>
             @endif
             @foreach($articles->items() as $article)
-                <div class="box">
-                    <a class="media has-text-black" href="{{ route('viewArticle', ['slug' => $article->slug]) }}">
+                <a class="box" href="{{ route('viewArticle', ['slug' => $article->slug]) }}">
+                    <div class="media has-text-black is-display-block-mobile">
                         <div class="media-left">
-                            <figure class="image is-16by9 thumbnail">
-                                @if(!empty($article->top_image_url) && filter_var($article->top_image_url, FILTER_VALIDATE_URL))
+                            @if(!empty($article->top_image_url) && filter_var($article->top_image_url, FILTER_VALIDATE_URL))
+                                <figure class="image is-16by9 thumbnail">
                                     <img src="{{ $article->top_image_url }}" alt="{{ $article->title }}">
-                                @else
+                                </figure>
+                            @else
+                                <figure class="image is-16by9 thumbnail is-display-none-mobile">
                                     <div class="placeholder">No Image</div>
-                                @endif
-                            </figure>
+                                </figure>
+                            @endif
                         </div>
                         <div class="media-content">
                             <p class="title is-4 mb-3">{{ $article->title }}</p>
@@ -86,8 +92,8 @@
                                 @endforeach
                             </div>
                         </div>
-                    </a>
-                </div>
+                    </div>
+                </a>
             @endforeach
         </section>
     </div>
