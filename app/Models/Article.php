@@ -65,6 +65,7 @@ class Article extends Model
     {
         return [
             'published' => 'boolean',
+            'user_id' => 'int',
         ];
     }
 }
