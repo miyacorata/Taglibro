@@ -2,4 +2,4 @@
 
 @section('title', 'Not Found')
 @section('code', '404')
-@section('message', 'このページは存在しないかメメントしてしまいました')
+@section('message', 'このページは存在しないか、ない話になってしまいました')
