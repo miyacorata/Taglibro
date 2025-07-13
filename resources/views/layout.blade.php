@@ -12,6 +12,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=IBM+Plex+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@twemoji/api@latest/dist/twemoji.min.js" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            twemoji.parse(document.body);
+        });
+    </script>
 
     @yield('head')
 
@@ -58,14 +64,16 @@
                 <li><a href="{{ route('dashboard') }}">管理画面</a></li>
             </ul>
         </nav>
-        <p>
+        <p class="is-size-7">
             <a href="https://bulma.io" target="_blank">
                 <img
                     src="https://bulma.io/assets/images/made-with-bulma--semiblack.png"
                     alt="Made with Bulma"
                     width="170"
                     height="32">
-            </a>
+            </a><br>
+            Emoji : <a href="https://github.com/jdecked/twemoji" target="_blank" class="has-text-weight-bold">jdecked/twemoji</a>,
+            <a href="https://creativecommons.org/licenses/by/4.0/deed.ja" target="_blank" title="クリエイティブ・コモンズ・ライセンス 表示 4.0 国際">CC BY 4.0</a>
         </p>
     </div>
 </footer>
