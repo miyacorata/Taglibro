@@ -149,6 +149,7 @@ final class ArticleDataController extends Controller
      */
     private function tagsUpsert(string $tag_string): array
     {
+        if (empty($tag_string)) return [];
         $tags = explode(',', $tag_string);
         $tags_upsert = [];
         foreach($tags as $tag){
