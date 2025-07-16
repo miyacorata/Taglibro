@@ -46,6 +46,9 @@ class AuthController extends Controller
             $user = $provider->getResourceOwner($token);
             $userData = $user->toArray();
 
+            // 時刻許容誤差
+            JWT::$leeway = 5;
+
             // JWTトークンの確認・デコード
             $jwt = $token->getToken();
             try {
