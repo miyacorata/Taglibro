@@ -8,6 +8,7 @@ use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
+use League\CommonMark\Extension\Footnote\FootnoteExtension;
 use League\CommonMark\Extension\InlinesOnly\InlinesOnlyExtension;
 use League\CommonMark\MarkdownConverter;
 
@@ -35,6 +36,16 @@ class VisitorController extends Controller
                 'noopener' => 'external',
                 'noreferrer' => 'external',
             ],
+            'footnote' => [
+                'backref_class'      => 'footnote-backref',
+                'backref_symbol'     => '↩',
+                'container_add_hr'   => true,
+                'container_class'    => 'footnotes',
+                'ref_class'          => 'footnote-ref',
+                'ref_id_prefix'      => 'fn-ref:',
+                'footnote_class'     => 'footnote',
+                'footnote_id_prefix' => 'fn:',
+            ],
         ];
 
         // 本文用変換処理
@@ -42,6 +53,7 @@ class VisitorController extends Controller
         $article_env->addExtension(new CommonMarkCoreExtension());
         $article_env->addExtension(new GithubFlavoredMarkdownExtension());
         $article_env->addExtension(new ExternalLinkExtension());
+        $article_env->addExtension(new FootnoteExtension());
         $article_converter = new MarkdownConverter($article_env);
         $converted_article_content = $article_converter->convert($article->content);
 
