@@ -43,3 +43,13 @@ img.emoji {
     margin: 0 .05em 0 .1em;
     vertical-align: -0.1em;
 }
+
+#article-content .footnote-ref {
+    padding: 0 0.1rem;
+}
+#article-content .footnote-ref::before {
+    content: "[";
+}
+#article-content .footnote-ref::after {
+    content: "]";
+}
