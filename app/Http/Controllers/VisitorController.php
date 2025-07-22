@@ -4,13 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 // use Illuminate\Http\Request;
+use Embed\Embed;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\Extension\Embed\Bridge\OscaroteroEmbedAdapter;
+use League\CommonMark\Extension\Embed\EmbedExtension;
+use League\CommonMark\Extension\Embed\EmbedRenderer;
+use League\CommonMark\Extension\Embed\Embed as CMEmbed;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
 use League\CommonMark\Extension\Footnote\FootnoteExtension;
 use League\CommonMark\Extension\InlinesOnly\InlinesOnlyExtension;
 use League\CommonMark\MarkdownConverter;
+use League\CommonMark\Renderer\HtmlDecorator;
 
 class VisitorController extends Controller
 {
@@ -25,6 +31,14 @@ class VisitorController extends Controller
     {
         $article = Article::wherePublished(true)->where('slug', $slug)->firstOrFail();
 
+        $embed_lib = new Embed();
+        $embed_lib->setSettings([
+            'oembed:query_parameters' => [
+                'omit_script' => 'true',
+                'maxwidth' => 800,
+                'maxheight' => 600,
+            ],
+        ]);
         $config = [
             'html_input' => 'escape',
             'arrow_unsafe_links' => false,
@@ -46,6 +60,11 @@ class VisitorController extends Controller
                 'footnote_class'     => 'footnote',
                 'footnote_id_prefix' => 'fn:',
             ],
+            'embed' => [
+                'adapter' => new OscaroteroEmbedAdapter($embed_lib),
+                'allowed_domains' => [],
+                'fallback' => 'link',
+            ],
         ];
 
         // 本文用変換処理
@@ -54,6 +73,8 @@ class VisitorController extends Controller
         $article_env->addExtension(new GithubFlavoredMarkdownExtension());
         $article_env->addExtension(new ExternalLinkExtension());
         $article_env->addExtension(new FootnoteExtension());
+        $article_env->addExtension(new EmbedExtension());
+        $article_env->addRenderer(CMEmbed::class, new HtmlDecorator(new EmbedRenderer(), 'div', ['class' => 'embed-content']));
         $article_converter = new MarkdownConverter($article_env);
         $converted_article_content = $article_converter->convert($article->content);
 

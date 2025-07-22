@@ -138,6 +138,10 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/laravel-lang/native-locale-names" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/laravel-lang/publisher" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-php81" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/embed/embed" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/ml/iri" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/ml/json-ld" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/oscarotero/html-parser" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -161,6 +161,10 @@
       <path value="$PROJECT_DIR$/vendor/laravel-lang/locale-list" />
       <path value="$PROJECT_DIR$/vendor/laravel-lang/config" />
       <path value="$PROJECT_DIR$/vendor/laravel-lang/native-locale-names" />
+      <path value="$PROJECT_DIR$/vendor/ml/iri" />
+      <path value="$PROJECT_DIR$/vendor/ml/json-ld" />
+      <path value="$PROJECT_DIR$/vendor/oscarotero/html-parser" />
+      <path value="$PROJECT_DIR$/vendor/embed/embed" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.3" />

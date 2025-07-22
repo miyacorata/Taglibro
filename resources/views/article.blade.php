@@ -31,6 +31,7 @@
             });
         });
     </script>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     <style>
         .user-icon {
             border-radius: 10%;
@@ -45,6 +46,9 @@
             justify-content: center;
             align-items: center;
             font-size: 1.5em;
+        }
+        .embed-content {
+            margin-bottom: var(--bulma-content-block-margin-bottom);
         }
     </style>
 @endsection
