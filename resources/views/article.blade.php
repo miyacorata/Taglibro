@@ -50,6 +50,9 @@
         .embed-content {
             margin-bottom: var(--bulma-content-block-margin-bottom);
         }
+        .embed-content > iframe {
+            max-width: 100%;
+        }
     </style>
 @endsection
 
