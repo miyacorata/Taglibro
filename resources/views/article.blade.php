@@ -99,6 +99,30 @@
                         で提供されています。
                     </p>
                 </div>
+                <div id="pager" class="columns mt-3">
+                    <div class="column">
+                        @if(!empty($article->next()))
+                            <a href="{{ route('viewArticle', ['slug' => $article->next()->slug]) }}" class="box column">
+                                <div class="is-size-7 mb-2 has-text-grey-dark">
+                                    <i class="fa-solid fa-chevron-left"></i>
+                                    次の記事
+                                </div>
+                                <p class="title is-5 has-text-weight-medium">{{ $article->next()->title }}</p>
+                            </a>
+                        @endif
+                    </div>
+                    <div class="column">
+                        @if(!empty($article->previous()))
+                            <a href="{{ route('viewArticle', ['slug' => $article->previous()->slug]) }}" class="box column has-text-right">
+                                <div class="is-size-7 mb-2 has-text-grey-dark">
+                                    前の記事
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </div>
+                                <p class="title is-5 has-text-weight-medium">{{ $article->previous()->title }}</p>
+                            </a>
+                        @endif
+                    </div>
+                </div>
             </div>
             <aside class="column is-one-quarter">
                 <div class="is-display-flex mb-4">

@@ -68,4 +68,24 @@ class Article extends Model
             'user_id' => 'int',
         ];
     }
+
+    public function previous(): Article|null
+    {
+        return Article::select()
+            ->where('published', '=', true)
+            ->where('created_at', '<', $this->created_at)
+            ->where('user_id', '=', $this->user_id)
+            ->orderBy('created_at', 'desc')
+            ->first();
+    }
+
+    public function next(): Article|null
+    {
+        return Article::select()
+            ->where('published', '=', true)
+            ->where('created_at', '>', $this->created_at)
+            ->where('user_id', '=', $this->user_id)
+            ->orderBy('created_at', 'asc')
+            ->first();
+    }
 }
