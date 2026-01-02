@@ -142,6 +142,9 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/ml/iri" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/ml/json-ld" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/oscarotero/html-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/storage/app" />
+      <excludeFolder url="file://$MODULE_DIR$/storage/framework" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/filesystem" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -165,6 +165,7 @@
       <path value="$PROJECT_DIR$/vendor/ml/json-ld" />
       <path value="$PROJECT_DIR$/vendor/oscarotero/html-parser" />
       <path value="$PROJECT_DIR$/vendor/embed/embed" />
+      <path value="$PROJECT_DIR$/vendor/symfony/filesystem" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.3" />
