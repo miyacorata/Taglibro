@@ -24,10 +24,15 @@
     <script>
         hljs.highlightAll();
         document.addEventListener('DOMContentLoaded', () => {
-            const shareButton = document.getElementById('misskey-share')
-            shareButton.addEventListener('click', (event) => {
+            const misskeyShareButton = document.getElementById('misskey-share')
+            misskeyShareButton.addEventListener('click', (event) => {
                 event.preventDefault();
-                window.open(shareButton.getAttribute('href'), '_blank', 'width=800,height=800');
+                window.open(misskeyShareButton.getAttribute('href'), '_blank', 'width=800,height=800');
+            });
+            const blueskyShareButton = document.getElementById('bluesky-share')
+            blueskyShareButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                window.open(blueskyShareButton.getAttribute('href'), '_blank', 'width=800,height=800');
             });
         });
     </script>
@@ -91,6 +96,10 @@
                         <a href="https://misskey-hub.net/ja/share/?text={{ urlencode($article->title.' - '.config('app.name').PHP_EOL.url()->current()) }}" target="_blank" class="button is-small is-dark py-1" id="misskey-share">
                             <span class="icon is-medium"><img src="{{ asset('images/misskey.png') }}" alt="Misskey"></span>
                             <span>ノート</span>
+                        </a>
+                        <a href="https://bsky.app/intent/compose?text={{ urlencode($article->title.' - '.config('app.name').PHP_EOL.url()->current()) }}" target="_blank" class="button is-small is-dark py-1" id="bluesky-share" style="background: #1285fe; color: white;">
+                            <span class="icon is-medium"><i class="fa-brands fa-bluesky"></i></span>
+                            <span>シェア</span>
                         </a>
                     </div>
                     <p class="mt-4 is-size-7">
