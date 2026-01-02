@@ -1,5 +1,6 @@
 <?php
-/** @noinspection PhpFullyQualifiedNameUsageInspection */
+
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -7,8 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- *
- *
  * @property int $id
  * @property string $slug
  * @property string $title
@@ -42,7 +41,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Article withoutTrashed()
  * @mixin \Eloquent
  */
-class Article extends Model
+final class Article extends Model
 {
     use SoftDeletes;
 
@@ -69,7 +68,7 @@ class Article extends Model
         ];
     }
 
-    public function previous(): Article|null
+    public function previous(): ?Article
     {
         return Article::select()
             ->where('published', '=', true)
@@ -79,7 +78,7 @@ class Article extends Model
             ->first();
     }
 
-    public function next(): Article|null
+    public function next(): ?Article
     {
         return Article::select()
             ->where('published', '=', true)

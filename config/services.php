@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
 
     /*
@@ -40,9 +42,9 @@ return [
         'client_secret' => env('COGNITO_CLIENT_SECRET'),
         'domain' => env('COGNITO_DOMAIN'),
         'redirect' => env('COGNITO_REDIRECT_URI'),
-        'user_pool_id'  => env('COGNITO_USER_POOL_ID'),
-        'region'  => env('COGNITO_REGION'),
-        'arrowed_group' => !empty(env('COGNITO_ARROWED_GROUP')) ? explode(',', env('COGNITO_ARROWED_GROUP')) : null,
+        'user_pool_id' => env('COGNITO_USER_POOL_ID'),
+        'region' => env('COGNITO_REGION'),
+        'arrowed_group' => ! empty(env('COGNITO_ARROWED_GROUP')) ? explode(',', env('COGNITO_ARROWED_GROUP')) : null,
     ],
 
 ];

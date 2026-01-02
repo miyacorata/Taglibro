@@ -8,6 +8,10 @@
       </laravel_pint_by_interpreter>
     </laravel_pint_settings>
   </component>
+  <component name="LaravelPintOptionsConfiguration">
+    <option name="pintJsonPath" value="$PROJECT_DIR$/pint.json" />
+    <option name="reformatOnlyUncommittedFiles" value="true" />
+  </component>
   <component name="MessDetector">
     <phpmd_settings>
       <phpmd_by_interpreter asDefaultInterpreter="true" interpreter_id="bcb5703d-f4d5-4ebd-a8cb-6a5517a53e45" timeout="30000" />

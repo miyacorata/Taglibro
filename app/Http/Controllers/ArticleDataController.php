@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Tag;
 use App\Models\User;
 use Auth;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -20,6 +23,7 @@ final class ArticleDataController extends Controller
     {
         $user = User::whereSub(Auth::user()->getAuthIdentifier())->firstOrFail();
         $articles = Article::with('user')->where('user_id', $user->id)->orderByDesc('created_at')->get();
+
         return view('admin.article.index', compact('articles'));
     }
 
@@ -29,6 +33,7 @@ final class ArticleDataController extends Controller
     public function create()
     {
         $tags = Tag::all();
+
         return view('admin.article.create', compact('tags'));
     }
 
@@ -61,7 +66,7 @@ final class ArticleDataController extends Controller
                 $article->save();
                 $article->tags()->sync($this->tagsUpsert($request->post('tags', '')));
             });
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             report($e);
             abort(500, '記事保存処理で異常が発生しました');
         }
@@ -83,6 +88,7 @@ final class ArticleDataController extends Controller
     public function edit(Article $article)
     {
         $tags = Tag::all();
+
         return view('admin.article.edit', compact('article', 'tags'));
     }
 
@@ -102,7 +108,7 @@ final class ArticleDataController extends Controller
             'slug.regex' => 'スラッグに使えない文字が含まれています。',
         ]);
 
-        if (!$this->isOwnArticle($article)) {
+        if (! $this->isOwnArticle($article)) {
             abort(403, 'それはあなたの記事ではない');
         }
 
@@ -111,17 +117,18 @@ final class ArticleDataController extends Controller
                 $article->title = $request->post('title');
                 $article->description = $request->post('description');
                 $article->top_image_url = $request->post('top_image_url');
-                if ($request->post('slug')) $article->slug = $request->post('slug');
+                if ($request->post('slug')) {
+                    $article->slug = $request->post('slug');
+                }
                 $article->content = $request->post('content');
                 $article->published = boolval($request->post('published'));
                 $article->tags()->sync($this->tagsUpsert($request->post('tags', '')));
                 $article->save();
             });
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             report($e);
             abort(500, '記事上書き保存処理で異常が発生しました');
         }
-
 
         return redirect()->route('article.index')->with('message', '記事「'.$article->title.'」を編集しました');
     }
@@ -131,10 +138,11 @@ final class ArticleDataController extends Controller
      */
     public function destroy(Article $article)
     {
-        if (!$this->isOwnArticle($article)) {
+        if (! $this->isOwnArticle($article)) {
             abort(403, 'それはあなたの記事ではない');
         }
         $article->delete();
+
         return redirect()->route('article.index')->with('message', '記事「'.$article->title.'」を削除しました');
     }
 
@@ -149,18 +157,21 @@ final class ArticleDataController extends Controller
      */
     private function tagsUpsert(string $tag_string): array
     {
-        if (empty($tag_string)) return [];
+        if (empty($tag_string)) {
+            return [];
+        }
         $tags = explode(',', $tag_string);
         $tags_upsert = [];
-        foreach($tags as $tag){
+        foreach ($tags as $tag) {
             $tags_upsert[] = ['tag' => $tag];
         }
         try {
             Tag::upsert($tags_upsert, ['tag'], ['tag']);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             report($e);
             abort(500, "タグのUPSERT処理で異常が発生しました\n".$e->getMessage());
         }
+
         return Tag::whereIn('tag', $tags)->get()->pluck('id')->toArray();
     }
 }

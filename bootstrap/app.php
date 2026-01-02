@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Auth\Middleware\Authenticate;
+declare(strict_types=1);
+
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;

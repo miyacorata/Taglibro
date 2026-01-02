@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Article;
@@ -9,17 +11,17 @@ use Embed\Embed;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\Extension\Embed\Bridge\OscaroteroEmbedAdapter;
+use League\CommonMark\Extension\Embed\Embed as CMEmbed;
 use League\CommonMark\Extension\Embed\EmbedExtension;
 use League\CommonMark\Extension\Embed\EmbedRenderer;
-use League\CommonMark\Extension\Embed\Embed as CMEmbed;
-use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
 use League\CommonMark\Extension\Footnote\FootnoteExtension;
+use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\Extension\InlinesOnly\InlinesOnlyExtension;
 use League\CommonMark\MarkdownConverter;
 use League\CommonMark\Renderer\HtmlDecorator;
 
-class VisitorController extends Controller
+final class VisitorController extends Controller
 {
     public function index()
     {
@@ -44,7 +46,7 @@ class VisitorController extends Controller
             'html_input' => 'escape',
             'arrow_unsafe_links' => false,
             'external_link' => [
-                'internal_hosts' => explode(':' ,$_SERVER['HTTP_HOST'])[0],
+                'internal_hosts' => explode(':', $_SERVER['HTTP_HOST'])[0],
                 'open_in_new_window' => true,
                 'html_class' => 'external-link',
                 'nofollow' => '',
@@ -52,13 +54,13 @@ class VisitorController extends Controller
                 'noreferrer' => 'external',
             ],
             'footnote' => [
-                'backref_class'      => 'footnote-backref',
-                'backref_symbol'     => '↩',
-                'container_add_hr'   => true,
-                'container_class'    => 'footnotes',
-                'ref_class'          => 'footnote-ref',
-                'ref_id_prefix'      => 'fn-ref:',
-                'footnote_class'     => 'footnote',
+                'backref_class' => 'footnote-backref',
+                'backref_symbol' => '↩',
+                'container_add_hr' => true,
+                'container_class' => 'footnotes',
+                'ref_class' => 'footnote-ref',
+                'ref_id_prefix' => 'fn-ref:',
+                'footnote_class' => 'footnote',
                 'footnote_id_prefix' => 'fn:',
             ],
             'embed' => [
@@ -81,6 +83,7 @@ class VisitorController extends Controller
                 $article_env->addExtension(new EmbedExtension());
                 $article_env->addRenderer(CMEmbed::class, new HtmlDecorator(new EmbedRenderer(), 'div', ['class' => 'embed-content']));
                 $article_converter = new MarkdownConverter($article_env);
+
                 return $article_converter->convert($article->content);
             },
         );
@@ -94,6 +97,7 @@ class VisitorController extends Controller
                 $profile_env->addExtension(new ExternalLinkExtension());
                 $profile_env->addExtension(new InlinesOnlyExtension());
                 $profile_converter = new MarkdownConverter($profile_env);
+
                 return $profile_converter->convert($article->user->biography ?? '');
             },
         );

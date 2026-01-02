@@ -1,13 +1,12 @@
 <?php
-/** @noinspection PhpFullyQualifiedNameUsageInspection */
+
+declare(strict_types=1);
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * 
- *
  * @property int $id
  * @property string $tag
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -23,7 +22,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Tag whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Tag extends Model
+final class Tag extends Model
 {
     public function articles()
     {

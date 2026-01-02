@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 
-class CognitoUser implements Authenticatable
+final class CognitoUser implements Authenticatable
 {
     protected $attributes;
 
@@ -25,12 +27,12 @@ class CognitoUser implements Authenticatable
 
     public function getAuthPassword()
     {
-        return null; // パスワードは Cognito で管理されるため不要
+         // パスワードは Cognito で管理されるため不要
     }
 
     public function getRememberToken()
     {
-        return null; // この実装では使用しない
+         // この実装では使用しない
     }
 
     public function setRememberToken($value)
@@ -40,7 +42,7 @@ class CognitoUser implements Authenticatable
 
     public function getRememberTokenName()
     {
-        return null; // この実装では使用しない
+         // この実装では使用しない
     }
 
     // ユーザーの属性にアクセスするためのメソッド

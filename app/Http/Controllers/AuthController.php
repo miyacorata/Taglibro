@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\CognitoUser;
 use App\Models\User;
+use Exception;
 use Firebase\JWT\JWK;
 use Firebase\JWT\JWT;
 use GuzzleHttp\Exception\GuzzleException;
@@ -15,13 +18,14 @@ use Illuminate\Support\Facades\Session;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 
-class AuthController extends Controller
+final class AuthController extends Controller
 {
     public function login()
     {
         $provider = app('oauth2.cognito');
         $authUrl = $provider->getAuthorizationUrl();
         Session::put('oauth2state', $provider->getState());
+
         return redirect()->away($authUrl);
     }
 
@@ -33,13 +37,14 @@ class AuthController extends Controller
         // 状態のチェック
         if (empty($request->state) || ($request->state !== Session::get('oauth2state'))) {
             Session::forget('oauth2state');
+
             return redirect('/')->withErrors('パラメーターに誤りがあります');
         }
 
         try {
             // アクセストークンを取得
             $token = $provider->getAccessToken('authorization_code', [
-                'code' => $request->code
+                'code' => $request->code,
             ]);
 
             // ユーザー情報を取得
@@ -54,13 +59,14 @@ class AuthController extends Controller
             try {
                 $decoded = JWT::decode($jwt, JWK::parseKeySet($this->getJwks()));
                 $userData['group'] = $decoded->{'cognito:groups'} ?? [];
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 \Illuminate\Log\log()->error($e->getMessage(), [$e->getCode(), $e->getLine(), $e->getFile(), $e->getTraceAsString()]);
+
                 return redirect('/')->withErrors('認証情報のデコードに失敗しました');
             }
 
             // ログイン許可グループとユーザーの所属グループの確認
-            if (!empty(config('services.cognito.arrowed_group'))) {
+            if (! empty(config('services.cognito.arrowed_group'))) {
                 if (count(array_intersect($userData['group'], config('services.cognito.arrowed_group'))) === 0) {
                     abort(403, 'あなたのアカウントはログイン許可グループに属していません');
                 }
@@ -85,9 +91,11 @@ class AuthController extends Controller
             return redirect(route('dashboard'));
         } catch (IdentityProviderException $e) {
             \Illuminate\Log\log()->error($e->getMessage(), [$e->getCode(), $e->getLine(), $e->getFile(), $e->getTraceAsString()]);
+
             return redirect('/')->withErrors($e->getMessage());
         } catch (GuzzleException $e) {
             \Illuminate\Log\log()->error($e->getMessage(), [$e->getCode(), $e->getLine(), $e->getFile(), $e->getTraceAsString()]);
+
             return redirect('/')->withErrors($e->getMessage());
         }
     }
@@ -103,6 +111,7 @@ class AuthController extends Controller
 
         Session::forget('user');
         Session::forget('access_token');
+
         return redirect()->away($cognitoLogout);
     }
 
@@ -116,6 +125,7 @@ class AuthController extends Controller
             $jwks = Http::get($url)->json();
             Cache::put('jwks', $jwks, now()->addMinutes(5));
         }
+
         return $jwks;
     }
 }

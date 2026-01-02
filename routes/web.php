@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Http\Controllers\ArticleDataController;
 use App\Http\Controllers\UserDataController;
 use App\Http\Controllers\VisitorController;

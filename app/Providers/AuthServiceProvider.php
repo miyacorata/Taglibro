@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use App\Auth\Auth\CognitoUserProvider;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Auth;
 
-class AuthServiceProvider extends ServiceProvider
+final class AuthServiceProvider extends ServiceProvider
 {
     /**
      * The policy mappings for the application.
@@ -34,6 +36,7 @@ class AuthServiceProvider extends ServiceProvider
                 $app['session.store']
             );
             $guard->setCookieJar($app['cookie']);
+
             return $guard;
         });
     }

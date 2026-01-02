@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\User;
@@ -12,6 +14,7 @@ final class UserDataController extends Controller
     public function index()
     {
         $appUser = User::whereSub(Auth::user()->getAuthIdentifier())->firstOrFail();
+
         return view('admin.dashboard', [
             'user' => Session::get('user'),
             'appUser' => $appUser,
