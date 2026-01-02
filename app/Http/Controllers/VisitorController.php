@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 // use Illuminate\Http\Request;
+use Cache;
 use Embed\Embed;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
@@ -67,25 +68,35 @@ class VisitorController extends Controller
             ],
         ];
 
-        // 本文用変換処理
-        $article_env = new Environment($config);
-        $article_env->addExtension(new CommonMarkCoreExtension());
-        $article_env->addExtension(new GithubFlavoredMarkdownExtension());
-        $article_env->addExtension(new ExternalLinkExtension());
-        $article_env->addExtension(new FootnoteExtension());
-        $article_env->addExtension(new EmbedExtension());
-        $article_env->addRenderer(CMEmbed::class, new HtmlDecorator(new EmbedRenderer(), 'div', ['class' => 'embed-content']));
-        $article_converter = new MarkdownConverter($article_env);
-        $converted_article_content = $article_converter->convert($article->content);
+        // 本文用変換・キャッシュ処理
+        $converted_article_content = Cache::remember(
+            'article.'.$article->id .'_'.$article->updated_at->timestamp,
+            now()->addDays(30),
+            function () use ($config, $article) {
+                $article_env = new Environment($config);
+                $article_env->addExtension(new CommonMarkCoreExtension());
+                $article_env->addExtension(new GithubFlavoredMarkdownExtension());
+                $article_env->addExtension(new ExternalLinkExtension());
+                $article_env->addExtension(new FootnoteExtension());
+                $article_env->addExtension(new EmbedExtension());
+                $article_env->addRenderer(CMEmbed::class, new HtmlDecorator(new EmbedRenderer(), 'div', ['class' => 'embed-content']));
+                $article_converter = new MarkdownConverter($article_env);
+                return $article_converter->convert($article->content);
+            },
+        );
 
-        // プロフィール用変換処理
-        $profile_env = new Environment($config);
-        $profile_env->addExtension(new ExternalLinkExtension());
-        $profile_env->addExtension(new InlinesOnlyExtension());
-        $profile_converter = new MarkdownConverter($profile_env);
-        $converted_profile_biography = $profile_converter->convert($article->user->biography ?? '');
-
-
+        // プロフィール用変換・キャッシュ処理
+        $converted_profile_biography = Cache::remember(
+            'user.profile.'.$article->user->id.'_'.$article->user->updated_at->timestamp,
+            now()->addDays(30),
+            function () use ($config, $article) {
+                $profile_env = new Environment($config);
+                $profile_env->addExtension(new ExternalLinkExtension());
+                $profile_env->addExtension(new InlinesOnlyExtension());
+                $profile_converter = new MarkdownConverter($profile_env);
+                return $profile_converter->convert($article->user->biography ?? '');
+            },
+        );
 
         return view('article', compact('article', 'converted_article_content', 'converted_profile_biography'));
     }
