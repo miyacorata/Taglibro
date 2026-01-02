@@ -93,6 +93,15 @@
                     </form>
                 </div>
             </div>
+            <h2>DBキャッシュクリア</h2>
+            <p>記事本文・プロフィール等のキャッシュを消去することができます。</p>
+            <form action="{{ route('cacheFlush') }}" method="post">
+                @csrf
+                <button class="button is-warning">
+                    <span class="icon"><i class="fa-solid fa-broom"></i></span>
+                    <span>キャッシュクリア</span>
+                </button>
+            </form>
         </div>
     </section>
 @endsection

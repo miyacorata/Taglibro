@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Auth;
+use Cache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -40,5 +41,12 @@ final class UserDataController extends Controller
         $userData->save();
 
         return redirect(route('dashboard'))->with('message', 'ユーザー情報を更新しました');
+    }
+
+    public function cacheFlush()
+    {
+        Cache::flush();
+
+        return redirect(route('dashboard'))->with('message', 'キャッシュを削除しました');
     }
 }
