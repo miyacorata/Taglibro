@@ -53,3 +53,7 @@ img.emoji {
 #article-content .footnote-ref::after {
     content: "]";
 }
+
+.image.is-16by9.thumbnail > img {
+    object-fit: cover;
+}
