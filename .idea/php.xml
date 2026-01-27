@@ -32,6 +32,9 @@
       <phpcs_by_interpreter asDefaultInterpreter="true" interpreter_id="bcb5703d-f4d5-4ebd-a8cb-6a5517a53e45" timeout="30000" />
     </phpcs_settings>
   </component>
+  <component name="PhpExternalFormatter">
+    <option name="externalFormatter" value="LARAVEL_PINT" />
+  </component>
   <component name="PhpIncludePathManager">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/laravel/sail" />
