@@ -111,6 +111,12 @@
                     </div>
                     <div class="field is-grouped is-justify-content-end">
                         <p class="control">
+                            <button type="button" class="button is-warning" id="open-preview">
+                                <span class="icon"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                                <span>プレビュー</span>
+                            </button>
+                        </p>
+                        <p class="control">
                             <button type="submit" class="button is-info" id="draft">
                                 <span class="icon"><i class="fa-solid fa-floppy-disk"></i></span>
                                 <span>非公開に切り替えて保存する</span>
@@ -140,6 +146,14 @@
                                         deleteForm.submit();
                                     }
                                 });
+                                document.getElementById('open-preview').addEventListener('click', () => {
+                                    if (form.reportValidity()) {
+                                        window.open('about:blank', 'preview');
+                                        const previewForm = form.cloneNode(true);
+                                        previewForm.setAttribute()
+                                    }
+                                });
+
                             });
                         </script>
                     </div>
