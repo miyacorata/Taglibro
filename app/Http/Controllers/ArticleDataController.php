@@ -7,15 +7,21 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Models\Tag;
 use App\Models\User;
+use App\Services\MarkdownConverterService;
 use Auth;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use League\CommonMark\Exception\CommonMarkException;
 
 final class ArticleDataController extends Controller
 {
+    public function __construct(
+        private MarkdownConverterService $markdownConverter,
+    ) {}
+
     /**
      * Display a listing of the resource.
      */
@@ -173,5 +179,34 @@ final class ArticleDataController extends Controller
         }
 
         return Tag::whereIn('tag', $tags)->get()->pluck('id')->toArray();
+    }
+
+    public function preview(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string|max:1000000',
+            'description' => 'nullable|string|max:500',
+            'top_image_url' => 'nullable|url|max:500',
+        ]);
+        $article = new Article($validated);
+        $article->user_id = auth()->id();
+        $article->published = false;
+        $article->created_at = now();
+
+        try {
+            $converted_article_content = $this->markdownConverter->convertArticle(
+                $article->content
+            );
+        } catch (CommonMarkException $e) {
+            report($e);
+            abort(500, '記事表示処理で問題が発生しました');
+        }
+
+        $converted_profile_biography = $this->markdownConverter->convertProfile(
+            $article->user
+        );
+
+        return view('article', compact('article', 'converted_article_content', 'converted_profile_biography'));
     }
 }

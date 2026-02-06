@@ -64,6 +64,13 @@
 @section('main')
     <div class="container">
         <section class="section">
+            @if(!$article->published)
+                <article class="message is-danger">
+                    <div class="message-body">
+                        <span style="font-weight: bold;"><i class="fa-solid fa-circle-exclamation mr-2"></i>これは公開されていない記事のプレビューです</span>
+                    </div>
+                </article>
+            @endif
             <h1 class="title is-2 mb-2">{{ $article->title }}</h1>
             <div class="subtitle is-7 has-text-black-20">
                 <i class="fa-solid fa-file-lines mr-1"></i>{{ $article->created_at->format('Y/m/d H:i:s') }}

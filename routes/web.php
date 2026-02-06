@@ -21,5 +21,6 @@ Route::prefix('admin')->middleware(Authenticate::class.':cognito')->group(functi
     Route::get('/dashboard', [UserDataController::class, 'index'])->name('dashboard');
     Route::post('/user/update', [UserDataController::class, 'update'])->name('user.update');
     Route::resource('/article', ArticleDataController::class)->names('article');
+    Route::post('/article/preview', [ArticleDataController::class, 'preview'])->name('article.preview');
     Route::post('/cache_flush', [UserDataController::class, 'cacheFlush'])->name('cacheFlush');
 });
