@@ -111,6 +111,12 @@
                     </div>
                     <div class="field is-grouped is-justify-content-end">
                         <p class="control">
+                            <button type="button" class="button is-warning" id="open-preview">
+                                <span class="icon"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                                <span>プレビュー</span>
+                            </button>
+                        </p>
+                        <p class="control">
                             <button type="submit" class="button is-info" id="draft">
                                 <span class="icon"><i class="fa-solid fa-floppy-disk"></i></span>
                                 <span>非公開に切り替えて保存する</span>
@@ -140,6 +146,18 @@
                                         deleteForm.submit();
                                     }
                                 });
+                                document.getElementById('open-preview').addEventListener('click', () => {
+                                    if (form.reportValidity()) {
+                                        const previewData = form.elements;
+                                        console.dir(previewData);
+                                        const previewForm = document.getElementById('article-preview');
+                                        previewForm['title'].value = previewData['title'].value;
+                                        previewForm['description'].value = previewData['description'].value;
+                                        previewForm['top_image_url'].value = previewData['top_image_url'].value;
+                                        previewForm['content'].value = previewData['content'].value;
+                                        previewForm.submit();
+                                    }
+                                });
                             });
                         </script>
                     </div>
@@ -148,6 +166,13 @@
             <form action="{{ route('article.destroy', ['article' => $article]) }}" method="post" id="article-delete">
                 @csrf
                 @method('delete')
+            </form>
+            <form action="{{ route('article.preview') }}" method="post" target="_blank" id="article-preview">
+                @csrf
+                <input type="hidden" name="title" value="">
+                <input type="hidden" name="description" value="">
+                <input type="hidden" name="top_image_url" value="">
+                <input type="hidden" name="content" value="">
             </form>
         </div>
     </section>

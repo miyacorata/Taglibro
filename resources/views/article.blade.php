@@ -64,6 +64,13 @@
 @section('main')
     <div class="container">
         <section class="section">
+            @if(!$article->published)
+                <article class="message is-danger">
+                    <div class="message-body">
+                        <span style="font-weight: bold;"><i class="fa-solid fa-circle-exclamation mr-2"></i>これは公開されていない記事のプレビューです</span>
+                    </div>
+                </article>
+            @endif
             <h1 class="title is-2 mb-2">{{ $article->title }}</h1>
             <div class="subtitle is-7 has-text-black-20">
                 <i class="fa-solid fa-file-lines mr-1"></i>{{ $article->created_at->format('Y/m/d H:i:s') }}
@@ -110,7 +117,7 @@
                 </div>
                 <div id="pager" class="columns mt-3">
                     <div class="column">
-                        @if(!empty($article->next()))
+                        @if(!empty($article->next()) && $article->id)
                             <a href="{{ route('viewArticle', ['slug' => $article->next()->slug]) }}" class="box column">
                                 <div class="is-size-7 mb-2 has-text-grey-dark">
                                     <i class="fa-solid fa-chevron-left"></i>
@@ -121,7 +128,7 @@
                         @endif
                     </div>
                     <div class="column">
-                        @if(!empty($article->previous()))
+                        @if(!empty($article->previous()) && $article->id)
                             <a href="{{ route('viewArticle', ['slug' => $article->previous()->slug]) }}" class="box column has-text-right">
                                 <div class="is-size-7 mb-2 has-text-grey-dark">
                                     前の記事
@@ -148,7 +155,7 @@
                     </div>
                 </div>
                 <div>{!! nl2br($converted_profile_biography) !!}</div>
-                @auth
+                @if($article->user->sub === Auth::user()->getAuthIdentifier() && $article->id)
                     <div class="mt-3">
                         <hr>
                         <a href="{{ route('article.edit', ['article' => $article->slug]) }}" class="button is-small">
@@ -156,7 +163,7 @@
                             <span>記事を編集する</span>
                         </a>
                     </div>
-                @endauth
+                @endif
             </aside>
         </section>
     </div>
