@@ -148,12 +148,16 @@
                                 });
                                 document.getElementById('open-preview').addEventListener('click', () => {
                                     if (form.reportValidity()) {
-                                        window.open('about:blank', 'preview');
-                                        const previewForm = form.cloneNode(true);
-                                        previewForm.setAttribute()
+                                        const previewData = form.elements;
+                                        console.dir(previewData);
+                                        const previewForm = document.getElementById('article-preview');
+                                        previewForm['title'].value = previewData['title'].value;
+                                        previewForm['description'].value = previewData['description'].value;
+                                        previewForm['top_image_url'].value = previewData['top_image_url'].value;
+                                        previewForm['content'].value = previewData['content'].value;
+                                        previewForm.submit();
                                     }
                                 });
-
                             });
                         </script>
                     </div>
@@ -162,6 +166,13 @@
             <form action="{{ route('article.destroy', ['article' => $article]) }}" method="post" id="article-delete">
                 @csrf
                 @method('delete')
+            </form>
+            <form action="{{ route('article.preview') }}" method="post" target="_blank" id="article-preview">
+                @csrf
+                <input type="hidden" name="title" value="">
+                <input type="hidden" name="description" value="">
+                <input type="hidden" name="top_image_url" value="">
+                <input type="hidden" name="content" value="">
             </form>
         </div>
     </section>

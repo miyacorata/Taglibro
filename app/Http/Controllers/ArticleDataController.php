@@ -189,10 +189,14 @@ final class ArticleDataController extends Controller
             'description' => 'nullable|string|max:500',
             'top_image_url' => 'nullable|url|max:500',
         ]);
-        $article = new Article($validated);
-        $article->user_id = auth()->id();
+        $article = new Article();
+        $article->title = $request->post('title');
+        $article->description = $request->post('description');
+        $article->top_image_url = $request->post('top_image_url');
+        $article->content = $request->post('content');
+        $article->user_id = User::whereSub(Auth::user()->getAuthIdentifier())->firstOrFail()->id;
         $article->published = false;
-        $article->created_at = now();
+        $article->created_at = $article->updated_at = now();
 
         try {
             $converted_article_content = $this->markdownConverter->convertArticle(
@@ -204,7 +208,7 @@ final class ArticleDataController extends Controller
         }
 
         $converted_profile_biography = $this->markdownConverter->convertProfile(
-            $article->user
+            User::find($article->user_id)
         );
 
         return view('article', compact('article', 'converted_article_content', 'converted_profile_biography'));
